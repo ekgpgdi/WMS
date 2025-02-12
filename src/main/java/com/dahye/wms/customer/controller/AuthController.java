@@ -2,10 +2,10 @@ package com.dahye.wms.customer.controller;
 
 import com.dahye.wms.common.domain.ResponseCode;
 import com.dahye.wms.common.dto.response.ServerResponse;
-import com.dahye.wms.customer.request.EmailRequest;
-import com.dahye.wms.customer.request.EmailVerifyRequest;
-import com.dahye.wms.customer.request.LoginRequest;
-import com.dahye.wms.customer.request.SignRequest;
+import com.dahye.wms.customer.dto.request.EmailRequest;
+import com.dahye.wms.customer.dto.request.EmailVerifyRequest;
+import com.dahye.wms.customer.dto.request.LoginRequest;
+import com.dahye.wms.customer.dto.request.SignRequest;
 import com.dahye.wms.customer.service.AuthService;
 import com.dahye.wms.customer.service.EmailService;
 import io.swagger.v3.oas.annotations.Operation;

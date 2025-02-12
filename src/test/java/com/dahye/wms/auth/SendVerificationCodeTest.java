@@ -2,7 +2,7 @@ package com.dahye.wms.auth;
 
 import com.dahye.wms.customer.domain.Customer;
 import com.dahye.wms.customer.repository.CustomerRepository;
-import com.dahye.wms.customer.request.EmailRequest;
+import com.dahye.wms.customer.dto.request.EmailRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;

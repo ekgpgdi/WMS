@@ -2,7 +2,7 @@ package com.dahye.wms.auth;
 
 import com.dahye.wms.customer.domain.Customer;
 import com.dahye.wms.customer.repository.CustomerRepository;
-import com.dahye.wms.customer.request.LoginRequest;
+import com.dahye.wms.customer.dto.request.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

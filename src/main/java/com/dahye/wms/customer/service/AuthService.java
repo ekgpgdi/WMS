@@ -7,7 +7,7 @@ import com.dahye.wms.common.exception.NotFoundException;
 import com.dahye.wms.common.service.JwtService;
 import com.dahye.wms.customer.domain.Customer;
 import com.dahye.wms.customer.repository.CustomerRepository;
-import com.dahye.wms.customer.request.SignRequest;
+import com.dahye.wms.customer.dto.request.SignRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -1,7 +1,7 @@
 package com.dahye.wms.auth;
 
-import com.dahye.wms.customer.request.EmailRequest;
-import com.dahye.wms.customer.request.EmailVerifyRequest;
+import com.dahye.wms.customer.dto.request.EmailRequest;
+import com.dahye.wms.customer.dto.request.EmailVerifyRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import org.hamcrest.Matchers;
