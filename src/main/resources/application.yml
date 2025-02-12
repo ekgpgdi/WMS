@@ -4,8 +4,8 @@ spring:
 
   datasource:
     url: jdbc:h2:mem:wms;MODE=MYSQL;
-    username: root
-    password: root
+    username: sa
+    password:
     driver-class-name: org.h2.Driver
 
   h2:
@@ -22,3 +22,6 @@ spring:
         format_sql: true
         ddl-auto: create-drop
     open-in-view: false
+
+app:
+  jwtSecret: 5TRwEzsnDlRL0mUTkKc2wHCy4auNF7AtLa9lE0HIo65v6QKHsJsDSNNeLilBEcnXxyiNCZN9zbEf6wtsUi1CbQ== #openssl rand -base64 64
