@@ -58,7 +58,7 @@ public class OrderService {
                     .build();
 
             orderItemList.add(orderItem);
-            totalAmount += orderRequest.getQuantity();
+            totalAmount += orderItem.getPrice();
         }
 
         orderItemRepository.saveAll(orderItemList);
