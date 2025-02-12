@@ -21,6 +21,7 @@ public enum ResponseCode {
     PRODUCT_OUT_OF_STOCK(false),
     INVALID_QUANTITY(true),
     INVALID_PRODUCT_ID(true),
+    INVALID_ORDER_REQUEST(true),
 
     // not found
     NOT_FOUND_CUSTOMER(false),
@@ -30,7 +31,8 @@ public enum ResponseCode {
     EXIST_EMAIL(false),
 
     // sever error
-    SERVER_ERROR(true);
+    SERVER_ERROR(true),
+    FILE_ERROR(true);
 
     public final boolean isFatality;
 

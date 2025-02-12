@@ -16,7 +16,7 @@ public class OrderRequest {
     private long productId;
 
     @Schema(description = "주문 수량", requiredMode = Schema.RequiredMode.REQUIRED)
-    @Min(value = 1, message = "REQUIRED_PRODUCT_ID")
+    @Min(value = 1, message = "INVALID_QUANTITY")
     private int quantity;
 
 }

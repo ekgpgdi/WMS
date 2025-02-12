@@ -91,4 +91,10 @@ public class GlobalExceptionHandler {
     public ServerResponse<?> productOutOfStockExceptionHandler(HttpServletRequest request, ProductOutOfStockException e) {
         return ServerResponse.errorResponse(ResponseCode.PRODUCT_OUT_OF_STOCK);
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(ExcelParseException.class)
+    public ServerResponse<?> excelParseExceptionHandler(HttpServletRequest request, ExcelParseException e) {
+        return ServerResponse.errorResponse(ResponseCode.valueOf(e.getMessage()));
+    }
 }
