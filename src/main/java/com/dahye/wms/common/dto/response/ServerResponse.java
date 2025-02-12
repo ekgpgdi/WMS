@@ -26,8 +26,4 @@ public class ServerResponse<T> {
     public static <T> ServerResponse<T> errorResponse(ResponseCode code) {
         return new ServerResponse<>(code);
     }
-
-    public static <T> ServerResponse<T> errorResponse(ResponseCode code, final T content) {
-        return new ServerResponse<>(code, content);
-    }
 }

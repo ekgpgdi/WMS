@@ -85,4 +85,10 @@ public class GlobalExceptionHandler {
     public ServerResponse<?> existExceptionHandler(HttpServletRequest request, ExistException e) {
         return ServerResponse.errorResponse(ResponseCode.valueOf(e.getMessage()));
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ProductOutOfStockException.class)
+    public ServerResponse<?> productOutOfStockExceptionHandler(HttpServletRequest request, ProductOutOfStockException e) {
+        return ServerResponse.errorResponse(ResponseCode.PRODUCT_OUT_OF_STOCK);
+    }
 }
