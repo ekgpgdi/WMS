@@ -46,8 +46,7 @@ public class SecurityConfig {
                                         .anyRequest()
                                         .authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(customAuthenticationEntryPoint)
-                .accessDeniedHandler(customAccessDeniedHandler))
-                .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()));
+                .accessDeniedHandler(customAccessDeniedHandler));
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
