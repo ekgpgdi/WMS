@@ -53,6 +53,7 @@ WMS 프로젝트는 사용자가 API 또는 엑셀 업로드를 통해 단건/�
 ### 💳 주문 관리
 - JSON Body를 통한 단건/여러건 주문
 - 엑셀 기반 단건/여러건 주문
+- 주문 내역 조회
 
 ## 주문 시 상세 FLOW
 
@@ -97,6 +98,7 @@ Swagger를 활용하여 API 문서화를 자동화하고, 개발 중 API 변경 
 | POST   | /api/v1/auth/sign                   | 회원가입       |
 | POST   | /api/v1/order                       | JSON Body를 통한 주문 |
 | POST   | /api/v1/order/excel                 | 엑셀을 통한 주문  |
+| GET   | /api/v1/order                 | 주문 내역 조회 (페이징)  |
 
 ## ERD
 [https://dbdiagram.io/](https://dbdiagram.io/) 활용 <br/>
