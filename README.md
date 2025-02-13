@@ -1,5 +1,16 @@
 # WMS 프로젝트
 
+## 인덱스
+
+1. [개요](#개요)
+2. [기술 스택](#기술-스택)
+3. [주요 기능](#주요-기능)
+4. [주문 시 상세 FLOW](#주문-시-상세-flow)
+5. [기술적 특징](#기술적-특징)
+6. [실행 방법](#실행-방법)
+7. [API 명세 간략](#api-명세-간략)
+8. [ERD](#erd)
+
 ## 개요 
 
 WMS 프로젝트는 사용자가 API 또는 엑셀 업로드를 통해 단건/여러 건의 상품 주문을 처리할 수 있도록 구현한 시스템입니다.
@@ -88,8 +99,10 @@ Swagger를 활용하여 API 문서화를 자동화하고, 개발 중 API 변경 
 | POST   | /api/v1/order/excel                 | 엑셀을 통한 주문  |
 
 ## ERD
-[https://dbdiagram.io/](https://dbdiagram.io/) 활용
-<br/>
+[https://dbdiagram.io/](https://dbdiagram.io/) 활용 <br/>
+<img width="579" alt="스크린샷 2025-02-13 오전 11 31 07" src="https://github.com/user-attachments/assets/42a1522b-f348-4218-a76c-03e341ccb8ee" />
+
+
 ```
 Table customer {
   id bigint [primary key]
