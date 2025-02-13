@@ -90,7 +90,7 @@ public class AuthController {
         authService.verifyCertCode(emailVerifyRequest.getEmail(), emailVerifyRequest.getCertCode());
 
     if (!verify) {
-      throw new IllegalArgumentException("VERIFIED_CODE_ERROR");
+      throw new IllegalArgumentException(ResponseCode.VERIFIED_CODE_ERROR.toString());
     }
 
     return ServerResponse.successResponse(ResponseCode.SUCCESS);

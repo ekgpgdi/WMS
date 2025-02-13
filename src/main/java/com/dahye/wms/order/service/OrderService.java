@@ -4,6 +4,7 @@ import com.dahye.wms.customer.domain.Customer;
 import com.dahye.wms.order.domain.Order;
 import com.dahye.wms.order.domain.OrderItem;
 import com.dahye.wms.order.domain.OrderStatus;
+import com.dahye.wms.order.dto.request.OrderProductRequest;
 import com.dahye.wms.order.dto.request.OrderRequest;
 import com.dahye.wms.order.repository.OrderItemRepository;
 import com.dahye.wms.order.repository.OrderRepository;
@@ -34,11 +35,13 @@ public class OrderService {
     }
 
     @Transactional
-    public Order order(Customer customer, Map<Long, Product> productMap, List<OrderRequest> orderRequestList) {
+    public Order order(Customer customer, Map<Long, Product> productMap, OrderRequest orderRequest) {
         Order order = Order.builder()
                 .orderNumber(generateOrderNumber())
                 .customer(customer)
                 .orderStatus(OrderStatus.SUCCESS)
+                .postcode(orderRequest.getPostcode())
+                .address(orderRequest.getAddress())
                 .totalAmount(0L)
                 .build();
 
@@ -47,14 +50,14 @@ public class OrderService {
         List<OrderItem> orderItemList = new ArrayList<>();
 
         long totalAmount = 0L;
-        for (OrderRequest orderRequest : orderRequestList) {
-            Product product = productMap.get(orderRequest.getProductId());
+        for (OrderProductRequest orderProductRequest : orderRequest.getOrderProductList()) {
+            Product product = productMap.get(orderProductRequest.getProductId());
 
             OrderItem orderItem = OrderItem.builder()
                     .order(order)
                     .product(product)
-                    .quantity(orderRequest.getQuantity())
-                    .price(product.getPrice() * orderRequest.getQuantity())
+                    .quantity(orderProductRequest.getQuantity())
+                    .price(product.getPrice() * orderProductRequest.getQuantity())
                     .build();
 
             orderItemList.add(orderItem);

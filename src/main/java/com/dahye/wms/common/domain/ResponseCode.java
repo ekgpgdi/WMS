@@ -22,6 +22,10 @@ public enum ResponseCode {
     INVALID_QUANTITY(true),
     INVALID_PRODUCT_ID(true),
     INVALID_ORDER_REQUEST(true),
+    REQUIRED_ADDRESS(true),
+    REQUIRED_POSTCODE(true),
+    REQUIRED_ORDER_PRODUCT(true),
+    INVALID_NUMBER_FORMAT(true),
 
     // not found
     NOT_FOUND_CUSTOMER(false),

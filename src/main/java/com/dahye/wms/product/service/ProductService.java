@@ -1,7 +1,8 @@
 package com.dahye.wms.product.service;
 
+import com.dahye.wms.common.domain.ResponseCode;
 import com.dahye.wms.common.exception.ProductOutOfStockException;
-import com.dahye.wms.order.dto.request.OrderRequest;
+import com.dahye.wms.order.dto.request.OrderProductRequest;
 import com.dahye.wms.product.domain.Product;
 import com.dahye.wms.product.domain.ProductStockLog;
 import com.dahye.wms.product.repository.ProductRepository;
@@ -27,12 +28,12 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public void validateStock(Map<Long, Product> productMap, List<OrderRequest> orderRequestList) {
-        for (OrderRequest orderRequest : orderRequestList) {
+    public void validateStock(Map<Long, Product> productMap, List<OrderProductRequest> orderRequestList) {
+        for (OrderProductRequest orderRequest : orderRequestList) {
             Product product = productMap.get(orderRequest.getProductId());
 
             if (product == null) {
-                throw new IllegalArgumentException("INVALID_PRODUCT_ID");
+                throw new IllegalArgumentException(ResponseCode.INVALID_PRODUCT_ID.toString());
             }
 
             if (product.getStock() < orderRequest.getQuantity()) {
@@ -42,8 +43,8 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProductStock(Map<Long, Product> productMap, List<OrderRequest> orderRequestList, long orderId) {
-        for (OrderRequest orderRequest : orderRequestList) {
+    public void updateProductStock(Map<Long, Product> productMap, List<OrderProductRequest> orderRequestList, long orderId) {
+        for (OrderProductRequest orderRequest : orderRequestList) {
             Product product = productMap.get(orderRequest.getProductId());
             product.setStock(product.getStock() - orderRequest.getQuantity());
             createProductStockLog(product.getId(), orderRequest.getQuantity(), orderId);

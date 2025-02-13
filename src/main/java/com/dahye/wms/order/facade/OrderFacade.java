@@ -4,6 +4,7 @@ import com.dahye.wms.common.domain.ResponseCode;
 import com.dahye.wms.customer.domain.Customer;
 import com.dahye.wms.customer.service.CustomerService;
 import com.dahye.wms.order.domain.Order;
+import com.dahye.wms.order.dto.request.OrderProductRequest;
 import com.dahye.wms.order.dto.request.OrderRequest;
 import com.dahye.wms.order.service.ExcelService;
 import com.dahye.wms.order.service.OrderService;
@@ -30,15 +31,15 @@ public class OrderFacade {
     private final ExcelService excelService;
 
     @Transactional
-    public Long order(Authentication authentication, List<OrderRequest> orderRequestList) {
+    public Long order(Authentication authentication, OrderRequest orderRequest) {
         Long customerId = (Long) authentication.getDetails();
         Customer customer = customerService.get(customerId);
 
-        if(orderRequestList.size() == 0) {
-            throw new IllegalArgumentException("INVALID_ORDER_REQUEST");
+        if(orderRequest.getOrderProductList().size() == 0) {
+            throw new IllegalArgumentException(ResponseCode.INVALID_ORDER_REQUEST.toString());
         }
 
-        List<Long> productIdList = orderRequestList.stream().map(OrderRequest::getProductId).toList();
+        List<Long> productIdList = orderRequest.getOrderProductList().stream().map(OrderProductRequest::getProductId).toList();
         List<Product> productList = productService.getLockProductByIdList(productIdList);
 
         Map<Long, Product> productMap = new HashMap<>();
@@ -46,17 +47,17 @@ public class OrderFacade {
             productMap.put(product.getId(), product); // 상품 ID를 키로, 상품 객체를 값으로 넣음
         }
 
-        productService.validateStock(productMap, orderRequestList);
+        productService.validateStock(productMap, orderRequest.getOrderProductList());
 
-        Order order = orderService.order(customer, productMap, orderRequestList);
-        productService.updateProductStock(productMap, orderRequestList, order.getId());
+        Order order = orderService.order(customer, productMap, orderRequest);
+        productService.updateProductStock(productMap, orderRequest.getOrderProductList(), order.getId());
 
         return order.getId();
     }
 
     @Transactional
     public Long orderByExcelFile(Authentication authentication, MultipartFile file) {
-        List<OrderRequest> orderRequestList = excelService.parseFile(file);
-        return order(authentication, orderRequestList);
+        OrderRequest orderRequest = excelService.parseFile(file);
+        return order(authentication, orderRequest);
     }
 }

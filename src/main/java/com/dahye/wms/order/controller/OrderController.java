@@ -50,7 +50,7 @@ public class OrderController {
             throw new IllegalArgumentException(bindingResult.getAllErrors().get(0).getDefaultMessage());
         }
 
-        return ServerResponse.successResponse(orderFacade.order(authentication, List.of(orderRequest)));
+        return ServerResponse.successResponse(orderFacade.order(authentication, orderRequest));
     }
 
     @ResponseStatus(HttpStatus.CREATED)

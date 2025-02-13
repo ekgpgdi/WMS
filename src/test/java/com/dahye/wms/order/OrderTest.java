@@ -4,6 +4,7 @@ import com.dahye.wms.customer.domain.Customer;
 import com.dahye.wms.customer.repository.CustomerRepository;
 import com.dahye.wms.customer.dto.request.LoginRequest;
 import com.dahye.wms.order.domain.Order;
+import com.dahye.wms.order.dto.request.OrderProductRequest;
 import com.dahye.wms.order.dto.request.OrderRequest;
 import com.dahye.wms.order.repository.OrderRepository;
 import com.dahye.wms.product.domain.Product;
@@ -29,6 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -99,8 +101,13 @@ public class OrderTest {
     @Test
     public void FailOrderByProductStock() throws Exception {
         OrderRequest orderRequest = new OrderRequest();
-        orderRequest.setProductId(product1.getId());
-        orderRequest.setQuantity(3);
+        orderRequest.setPostcode("04320");
+        orderRequest.setAddress("서울특별시 용산구 한강대로 405");
+
+        OrderProductRequest orderProductRequest = new OrderProductRequest();
+        orderProductRequest.setProductId(product1.getId());
+        orderProductRequest.setQuantity(3);
+        orderRequest.setOrderProductList(List.of(orderProductRequest));
 
         mockMvc.perform(post("/api/v1/order")
                         .header("Authorization", "Bearer " + accessToken)
@@ -115,8 +122,13 @@ public class OrderTest {
     @Test
     public void orderByPayApi() throws Exception {
         OrderRequest orderRequest = new OrderRequest();
-        orderRequest.setProductId(1);
-        orderRequest.setQuantity(1);
+        orderRequest.setPostcode("04320");
+        orderRequest.setAddress("서울특별시 용산구 한강대로 405");
+
+        OrderProductRequest orderProductRequest = new OrderProductRequest();
+        orderProductRequest.setProductId(product1.getId());
+        orderProductRequest.setQuantity(1);
+        orderRequest.setOrderProductList(List.of(orderProductRequest));
 
         mockMvc.perform(post("/api/v1/order")
                         .header("Authorization", "Bearer " + accessToken)

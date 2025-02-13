@@ -34,6 +34,12 @@ public class Order extends BaseTimeEntity {
     @Column(nullable = false)
     private Long totalAmount;
 
+    @Column(nullable = true, length = 10)
+    private String postcode;
+
+    @Column(length = 255)
+    private String address;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItemList = new ArrayList<>();
 }

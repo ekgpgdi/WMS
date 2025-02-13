@@ -1,6 +1,7 @@
 package com.dahye.wms.customer.service;
 
 
+import com.dahye.wms.common.domain.ResponseCode;
 import com.dahye.wms.common.exception.ExistException;
 import com.dahye.wms.common.exception.InvalidPasswordException;
 import com.dahye.wms.common.exception.NotFoundException;
@@ -32,10 +33,10 @@ public class AuthService {
         Customer customer =
                 customerRepository
                         .findByEmail(email)
-                        .orElseThrow(() -> new NotFoundException("NOT_FOUND_CUSTOMER"));
+                        .orElseThrow(() -> new NotFoundException(ResponseCode.NOT_FOUND_CUSTOMER.toString()));
 
         if (!passwordEncoder.matches(password, customer.getPassword())) {
-            throw new InvalidPasswordException("INVALID_PASSWORD");
+            throw new InvalidPasswordException(ResponseCode.INVALID_PASSWORD.toString());
         }
 
         return jwtService.generateJwt(customer.getId(), customer.getEmail());
@@ -68,12 +69,12 @@ public class AuthService {
     @Transactional
     public String sign(SignRequest signRequest) {
         if (checkEmail(signRequest.getEmail())) {
-            throw new ExistException("EXIST_EMAIL");
+            throw new ExistException(ResponseCode.EXIST_EMAIL.toString());
         }
 
         if (!checkVerifyEmailRedisTemplate.hasKey(signRequest.getEmail())
                 || !checkVerifyEmailRedisTemplate.opsForValue().get(signRequest.getEmail())) {
-            throw new IllegalArgumentException("REQUIRED_EMAIL_VERIFIED");
+            throw new IllegalArgumentException(ResponseCode.REQUIRED_EMAIL_VERIFIED.toString());
         }
 
         Customer customer =
