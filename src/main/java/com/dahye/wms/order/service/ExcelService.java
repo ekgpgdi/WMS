@@ -22,6 +22,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExcelService {
 
+    public long parseNumericCell(Cell cell) {
+        if (cell == null) {
+            throw new ExcelParseException(ResponseCode.INVALID_NUMBER_FORMAT.toString());
+        } else if (cell.getCellType() == CellType.NUMERIC) {
+            return (long) cell.getNumericCellValue();
+        } else if (cell.getCellType() == CellType.STRING) {
+            return Long.parseLong(cell.getStringCellValue().trim());
+        } else {
+            throw new ExcelParseException(ResponseCode.INVALID_NUMBER_FORMAT.toString());
+        }
+    }
+
     public OrderRequest parseFile(MultipartFile file) {
         List<OrderProductRequest> orderProductRequestList = Lists.newArrayList();
         OrderRequest orderRequest = new OrderRequest();
@@ -46,29 +58,22 @@ public class ExcelService {
             rowIterator.next();
             rowIterator.next();
             rowIterator.next();
+            rowIterator.next();
 
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
 
-                Cell cell1 = row.getCell(0); // 첫 번째 컬럼
-                Cell cell2 = row.getCell(1); // 두 번째 컬럼
+                Cell cell1 = row.getCell(0);
+                Cell cell2 = row.getCell(1);
 
-                if (cell1 != null && cell1.getCellType() == CellType.NUMERIC &&
-                        cell2 != null && cell2.getCellType() == CellType.NUMERIC) {
-                    throw new ExcelParseException(ResponseCode.INVALID_NUMBER_FORMAT.toString());
-                }
+                double productId = parseNumericCell(cell1);
+                double quantity = parseNumericCell(cell2);
 
-                // 데이터 처리 예시
-                if (cell1 != null && cell2 != null) {
-                    double productId = cell1.getNumericCellValue();
-                    double quantity = cell2.getNumericCellValue();
+                OrderProductRequest orderProductRequest = new OrderProductRequest();
+                orderProductRequest.setProductId((long) productId);
+                orderProductRequest.setQuantity((int) quantity);
 
-                    OrderProductRequest orderProductRequest = new OrderProductRequest();
-                    orderProductRequest.setProductId((long) productId);
-                    orderProductRequest.setQuantity((int) quantity);
-
-                    orderProductRequestList.add(orderProductRequest);
-                }
+                orderProductRequestList.add(orderProductRequest);
             }
 
             orderRequest.setPostcode(String.valueOf(postcodeCell.getStringCellValue()));
