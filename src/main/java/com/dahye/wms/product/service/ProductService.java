@@ -5,6 +5,7 @@ import com.dahye.wms.common.exception.ProductOutOfStockException;
 import com.dahye.wms.order.dto.request.OrderProductRequest;
 import com.dahye.wms.product.domain.Product;
 import com.dahye.wms.product.domain.ProductStockLog;
+import com.dahye.wms.product.dto.response.ProductSummaryResponse;
 import com.dahye.wms.product.repository.ProductRepository;
 import com.dahye.wms.product.repository.ProductStockLogRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,14 @@ public class ProductService {
                 .build();
 
         productStockLogRepository.save(productStockLog);
+    }
+
+    @Transactional(readOnly = true)
+    public ProductSummaryResponse makeProductResponse(Product product) {
+        return ProductSummaryResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .build();
     }
 }

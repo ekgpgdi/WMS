@@ -63,15 +63,17 @@ public class ExcelService {
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
 
+                Cell firstCell = row.getCell(0);
+                if (firstCell != null && firstCell.getCellType() == CellType.STRING && "END".equals(firstCell.getStringCellValue())) {
+                    break;  // "END" 행을 만나면 반복문 종료
+                }
+
                 Cell cell1 = row.getCell(0);
                 Cell cell2 = row.getCell(1);
 
-                double productId = parseNumericCell(cell1);
-                double quantity = parseNumericCell(cell2);
-
                 OrderProductRequest orderProductRequest = new OrderProductRequest();
-                orderProductRequest.setProductId((long) productId);
-                orderProductRequest.setQuantity((int) quantity);
+                orderProductRequest.setProductId(parseNumericCell(cell1));
+                orderProductRequest.setQuantity((int) parseNumericCell(cell2));
 
                 orderProductRequestList.add(orderProductRequest);
             }
@@ -83,6 +85,9 @@ public class ExcelService {
         } catch (IOException e) {
             log.error("엑셀 처리 중 오류 발생 : " + e.getMessage(), e);
             throw new ExcelParseException(ResponseCode.FILE_ERROR.toString());
+        } catch (Exception e) {
+            log.error("엑셀 처리 중 오류 발생 : " + e.getMessage(), e);
+            throw e;
         }
 
         return orderRequest;
